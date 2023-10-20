@@ -30,5 +30,5 @@ async def get_position(
     await message.answer(reg_finish)
     await state.update_data(position=message.text)
     data = await state.get_data()
-    await bot.send_message(get_config(".env").ADMIN_ID, admin_user_request.format(name=data["name"], position=data["position"]))
+    await bot.send_message(get_config(".env").ADMIN_ID, admin_user_request.format(name=data["name"], position=data["position"], id=message.from_user.id, telegram_tag=message.from_user.username))
     await state.clear()

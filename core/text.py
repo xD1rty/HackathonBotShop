@@ -5,10 +5,13 @@ start_non_user = """
 """
 
 admin_user_request = """
-Привет, дорогой админ!
+Привет, <b>дорогой админ!</b>
 Пользователь хочет войти в систему!
-Имя - {name}
-Должность - {position}
+
+Имя - <code>{name}</code>
+Должность - <code>{position}</code>
+ID - <code>{id}</code>
+Телеграм - @{telegram_tag}
 
 Добавляем в систему?
 """

@@ -1,6 +1,7 @@
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
 import asyncio
+from aiogram.enums.parse_mode import ParseMode
 from core.config import get_config
 from core.bot.handlers.user.start import start_handler
 from core.bot.handlers.user.registration import start_registration, get_name, get_position
@@ -10,7 +11,7 @@ import logging
 async def start():
     logging.basicConfig(level=logging.INFO,
                         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-    bot = Bot(token=get_config(".env").BOT_TOKEN)
+    bot = Bot(token=get_config(".env").BOT_TOKEN, parse_mode=ParseMode.HTML)
     dp = Dispatcher()
 
     dp.message.register(start_handler, Command("start"))
