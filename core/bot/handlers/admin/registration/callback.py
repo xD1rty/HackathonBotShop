@@ -1,6 +1,7 @@
 from aiogram import Bot
 from aiogram.types import CallbackQuery
 from core.text import reg_ban, reg_accept, admin_user_request_accept, admin_user_request_ban
+from core.bot.keyboards.reply import user_menu
 
 async def ban_or_accept_user(call: CallbackQuery, bot: Bot):
     if "ban_" in call.data:
@@ -14,6 +15,6 @@ async def ban_or_accept_user(call: CallbackQuery, bot: Bot):
             name="ПОка нет БД",
             balance = "10000",
             id = telegram_user_id
-        ))
+        ), reply_markup=user_menu)
         await call.message.answer(admin_user_request_accept.format(name="нет бд", position="нет бд", id=telegram_user_id, telegram_tag="pip пока нет"))
         await call.answer()
