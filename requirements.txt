@@ -21,3 +21,4 @@ python-dotenv==1.0.0
 SQLAlchemy==2.0.22
 typing_extensions==4.7.1
 yarl==1.9.2
+asyncpg==0.28.0

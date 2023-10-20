@@ -7,6 +7,8 @@ from core.bot.handlers.user.start import start_handler
 from core.bot.handlers.user.registration import start_registration, get_name, get_position
 from core.bot.states.user.registration import Registration
 from core.bot.handlers.admin.registration.callback import ban_or_accept_user
+from core.bot.middlewares.db import DbSessionMiddleware
+from core.backend.db.db_setup import init_db, session
 
 import logging
 
@@ -15,6 +17,10 @@ async def start():
                         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     bot = Bot(token=get_config(".env").BOT_TOKEN, parse_mode=ParseMode.HTML)
     dp = Dispatcher()
+
+    dp.update.middleware(DbSessionMiddleware(session_pool=session))
+
+    dp.startup.register(init_db)
 
     dp.message.register(start_handler, Command("start"))
 
