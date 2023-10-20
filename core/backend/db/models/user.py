@@ -8,5 +8,5 @@ class User(Base):
     telegram_tag = Column(String)
     name = Column(String)
     position = Column(String)
-    balance = Column(Integer)
-    is_worker = Column(Boolean)
+    balance = Column(Integer, default=0)
+    is_worker = Column(Boolean, default=None)
