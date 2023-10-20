@@ -5,6 +5,7 @@ from dataclasses import dataclass
 class Config:
     BOT_TOKEN: str
     ADMIN_ID: int
+    PSQL_URL: str
 
 def get_config(path):
     env = Env()
