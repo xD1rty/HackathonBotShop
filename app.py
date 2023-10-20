@@ -6,6 +6,8 @@ from core.config import get_config
 from core.bot.handlers.user.start import start_handler
 from core.bot.handlers.user.registration import start_registration, get_name, get_position
 from core.bot.states.user.registration import Registration
+from core.bot.handlers.admin.registration.callback import ban_or_accept_user
+
 import logging
 
 async def start():
@@ -20,6 +22,7 @@ async def start():
     dp.message.register(start_registration, F.text == "Зарегистрироваться")
     dp.message.register(get_name, Registration.name)
     dp.message.register(get_position, Registration.position)
+    dp.callback_query.register(ban_or_accept_user)
 
     try:
         await dp.start_polling(bot)
