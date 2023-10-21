@@ -23,7 +23,7 @@ async def create_money_token_final(
 ):
     try:
         token = await create_token(message.from_user.id, int(message.text), session)
-        await message.answer(f"Ваша ссылка на получение монет: \n\nt.me/intensa_shop_bot?start={token}")
+        await message.answer(f"Ваша ссылка на получение монет: \n\nt.me/intensa_shop_bot?start={token.token}")
         await state.clear()
     except TypeError:
         await message.answer("Попробуй снова, тут ошибка")
