@@ -12,6 +12,8 @@ from core.backend.db.db_setup import init_db, session
 from core.bot.handlers.user.profile import get_profile
 from core.bot.states.admin.money import MoneyAdd
 from core.bot.handlers.admin.menu import add_user_money, set_money, get_money_count, get_all_users_handler
+from core.bot.handlers.user.money_send import create_money_token, create_money_token_final
+from core.bot.states.user.money_send import SendMoney
 
 import logging
 
@@ -32,6 +34,8 @@ async def start():
     dp.message.register(get_name, Registration.name)
     dp.message.register(get_position, Registration.position)
     dp.message.register(get_profile, F.text == "Профиль")
+    dp.message.register(create_money_token, F.text == "Создать чек")
+    dp.message.register(create_money_token_final, SendMoney.money)
     dp.callback_query.register(ban_or_accept_user)
 
     # Admin
