@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from core.text import admin_order_request, user_order_done, user_order_request
 from core.config import get_config
 from core.backend.db.utils.user import get_user_by_id
+from core.backend.db.utils.product import get_product_by_id
 
 
 async def create_order_request(
@@ -13,11 +14,12 @@ async def create_order_request(
         session: AsyncSession
 ):
         order = await add_order(call.from_user.id, int(call.data.replace("buy_", "").strip()), session)
-        user = await get_user_by_id(order.user_id, session)
+        user = await get_user_by_id(call.from_user.id, session)
         await bot.send_message(get_config(".env").ADMIN_ID, admin_order_request.format(
             user_name = user.name,
             product_name = order.product.title
         ))
+        product = await get_product_by_id(get_order_by_id())
         await call.message.answer(user_order_request.format(
             product_name = order.product.title,
             price = order.product.price
