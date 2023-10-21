@@ -1,4 +1,5 @@
 from core.backend.db.db_setup import Base
+from core.backend.db.models.order import Order
 from sqlalchemy import Column, BigInteger, String, Integer, Boolean
 from sqlalchemy.orm import relationship
 
