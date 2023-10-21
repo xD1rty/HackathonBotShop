@@ -84,3 +84,18 @@ product_text = """
 Цена: <b>{price} TC</b>
 Категория <b>{category}</b>
 """
+
+admin_order_request = """
+Пользователь <code>{user_name} {id}</code> купил <b>{product_name}</b>
+Готов ли заказ?
+"""
+
+user_order_done = """
+Ваш заказ <b>{product_name}</b> готов! 
+Обратитесь к администратору
+"""
+
+user_order_request = """
+Вы купили <b>{product_name}</b> за <b>{price} TC.</b>
+Ожидайте ответа админа
+"""
