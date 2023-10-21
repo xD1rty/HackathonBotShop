@@ -20,9 +20,12 @@ async def get_token(token: str, session: AsyncSession):
 
 async def use_token(tg_id: int, token: str, session: AsyncSession):
     token_db = await get_token(token, session)
-    user = await get_user(tg_id, session)
-    money = token_db.money
-    token_db.user.balance -= money
-    user.balance += money
-    await session.commit()
-    return True
+    if token_db.is_open:
+        user = await get_user(tg_id, session)
+        money = token_db.money
+        token_db.is_open = False
+        token_db.user.balance -= money
+        user.balance += money
+        await session.commit()
+        return True
+    raise Exception('рефералка уже использована')

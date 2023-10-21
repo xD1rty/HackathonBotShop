@@ -8,6 +8,6 @@ class Token(Base):
     id = Column(Integer, primary_key=True)
     token = Column(String)
     money = Column(Integer)
-    is_close = Column(Boolean, default=False)
+    is_open = Column(Boolean, default=True)
     user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship('User', back_populates='tokens')
