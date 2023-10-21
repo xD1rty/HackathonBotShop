@@ -4,7 +4,7 @@ from core.bot.states.user.registration import Registration
 from core.text import reg_name, reg_position, reg_finish, admin_user_request
 from core.config import get_config
 from aiogram.fsm.context import FSMContext
-from core.backend.db.utils.user import register, get_user
+from core.backend.db.utils.user import register, get_user_by_id
 from core.bot.keyboards.inline import create_keyboard_accept_user
 
 

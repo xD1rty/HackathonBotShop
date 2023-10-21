@@ -3,7 +3,7 @@ from core.text import start_non_user, start_admin, admin_user_request, reg_ban, 
 from core.bot.keyboards.reply import reg_button
 from sqlalchemy.ext.asyncio import AsyncSession
 from core.config import get_config
-from core.backend.db.utils.user import get_user
+from core.backend.db.utils.user import get_user_by_id
 from core.bot.keyboards.reply import admin_menu
 from core.backend.db.utils.token import use_token, get_token
 
@@ -26,7 +26,7 @@ async def start_handler(
         if message.from_user.id == get_config(".env").ADMIN_ID:
             await message.answer(start_admin.format(name=message.from_user.first_name), reply_markup=admin_menu)
         else:
-            user = await get_user(message.from_user.id, session)
+            user = await get_user_by_id(message.from_user.id, session)
             if user == None:
                 await message.answer(start_non_user, reply_markup=reg_button)
             else:

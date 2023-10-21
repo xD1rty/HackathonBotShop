@@ -12,3 +12,4 @@ class User(Base):
     balance = Column(Integer, default=0)
     is_worker = Column(Boolean, default=None)
     tokens = relationship('Token', back_populates='user')
+    orders = relationship('Order', back_populates='user')

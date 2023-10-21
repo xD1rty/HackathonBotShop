@@ -2,7 +2,7 @@ from aiogram import Bot
 from aiogram.types import CallbackQuery
 from core.text import reg_ban, reg_accept, admin_user_request_accept, admin_user_request_ban
 from core.bot.keyboards.reply import user_menu
-from core.backend.db.utils.user import edit_status, get_user
+from core.backend.db.utils.user import edit_status, get_user_by_id
 from sqlalchemy.ext.asyncio import AsyncSession
 
 async def ban_or_accept_user(call: CallbackQuery, bot: Bot, session: AsyncSession):
@@ -14,7 +14,7 @@ async def ban_or_accept_user(call: CallbackQuery, bot: Bot, session: AsyncSessio
         await call.answer()
     if "accept_" in call.data:
         telegram_user_id = int(call.data.replace("accept_", "").strip())
-        user = await get_user(telegram_user_id, session)
+        user = await get_user_by_id(telegram_user_id, session)
         await bot.send_message(telegram_user_id, reg_accept.format(
             name=user.name,
             balance = user.balance,

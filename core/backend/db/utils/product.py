@@ -24,6 +24,10 @@ async def get_product_by_id(product_id: int, session: AsyncSession):
     return (await session.execute(select(Product).filter(Product.id == product_id))).scalar_one_or_none()
 
 
+async def get_all_products(session: AsyncSession):
+    return (await session.execute(select(Product))).scalars().all()
+
+
 async def get_product_by_category(category_title: str, session: AsyncSession):
     category = await get_category_by_title_with_products(category_title, session)
     return category.products
