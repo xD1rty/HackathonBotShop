@@ -9,6 +9,9 @@ from core.bot.states.user.registration import Registration
 from core.bot.handlers.admin.registration.callback import ban_or_accept_user
 from core.bot.middlewares.db import DbSessionMiddleware
 from core.backend.db.db_setup import init_db, session
+from core.bot.handlers.user.profile import get_profile
+from core.bot.states.admin.money import MoneyAdd
+from core.bot.handlers.admin.menu import add_user_money, set_money, get_money_count
 
 import logging
 
@@ -28,7 +31,14 @@ async def start():
     dp.message.register(start_registration, F.text == "Зарегистрироваться")
     dp.message.register(get_name, Registration.name)
     dp.message.register(get_position, Registration.position)
+    dp.message.register(get_profile, F.text == "Профиль")
     dp.callback_query.register(ban_or_accept_user)
+
+    # Admin
+
+    dp.message.register(add_user_money, F.text == "Начислить баланс")
+    dp.message.register(get_money_count, MoneyAdd.id)
+    dp.message.register(set_money, MoneyAdd.money)
 
     try:
         await dp.start_polling(bot)
