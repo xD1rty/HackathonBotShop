@@ -12,6 +12,7 @@ from core.backend.utils.photo import upload_photo
 from aiogram.types import InputFile
 from core.text import product_text
 from core.bot.keyboards.reply import admin_menu
+from aiogram.enums.content_type import ContentType
 
 
 async def create_category(
@@ -86,7 +87,7 @@ async def create_product_category(
         state: FSMContext,
         session: AsyncSession
 ):
-    if message.text in [].append(i.title for i in await get_all_category(session)):
+    if message.text in [i.title for i in await get_all_category(session)]:
         await state.update_data(category=message.text)
         await message.answer("Отправьте фотографию (ОДНУ), если не хотите, нажмите нет", reply_markup=ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text="Нет")]]))
         await state.set_state(CreateProduct.photos)
@@ -101,11 +102,11 @@ async def create_product_photos(
         session: AsyncSession,
         bot: Bot
 ):
-    if message.photo:
-        urls = await upload_photo(message)
-        await state.update_data(photos=urls)
-    elif message.text == "Нет":
+    if message.content_type == ContentType.TEXT:
         await state.update_data(photos=None)
+    elif message.content_type == ContentType.PHOTO:
+        urls = await upload_photo(message.photo[-1], bot)
+        await state.update_data(photos=urls)
 
     data = await state.get_data()
     await state.clear()
@@ -114,7 +115,9 @@ async def create_product_photos(
         title=data["title"],
         description=data["description"],
         category_title=data["category"],
-        photo=data["photos"] if data["photos"] != None else None,
+        photo=data["photos"] if data["photos"] != None else ...,
+        price=data["price"],
+        session=session,
         bot=bot
     )
     if product.photo != None:
