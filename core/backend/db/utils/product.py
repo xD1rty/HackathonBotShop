@@ -8,7 +8,7 @@ from aiogram import Bot
 
 
 async def add_product(message_type: str, title: str, description: str, price: int, category_title: str,
-                      session: AsyncSession, photo: PhotoSize, bot: Bot):
+                      session: AsyncSession, bot: Bot, photo: PhotoSize = None):
     category = await get_category_by_title(category_title, session)
     if category:
         uploaded_photo = None
