@@ -13,19 +13,15 @@ from aiogram.types import PhotoSize
 #     return photo[-1].file
 
 
-async def upload_photo(photo: PhotoSize, bot: Bot):
-    photo_path = (await bot.get_file(photo.file_id)).file_path
-    print(photo_path)
+async def upload_photo(photo_size: PhotoSize, bot: Bot):
+    photo_path = (await bot.get_file(photo_size.file_id)).file_path
     destination = BytesIO()
     async with aiohttp.ClientSession() as session:
         data = aiohttp.FormData()
-        data.add_field('file',
-                       open('Front.jpg', 'rb'),
-                       filename='Front.jpg',
+        data.add_field('image',
+                       await bot.download_file(photo_path, destination=destination),
                        content_type='multipart/form-data')
         async with session.post(
-                f'http://freeimage.host/api/1/upload/?key={get_config(".env").API_KEY}&format=json',
-                data=data
+                f'https://api.imgbb.com/1/upload?expiration=600&key={get_config(".env").API_KEY}', data=data
         ) as response:
-            print(await response.json(), response)
-            return (await response.json())['image']['url']
+            return (await response.json())['data']['url']

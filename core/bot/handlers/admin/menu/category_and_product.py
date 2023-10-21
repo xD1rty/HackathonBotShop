@@ -133,12 +133,12 @@ async def create_product_photos(
             bot=bot
         )
     if product.photo != None:
-        await message.answer_photo(photo=InputFile(product.photo), caption=product_text.
+        await message.answer_photo(photo=product.photo, caption=product_text.
                                    format(
             name = product.title,
             description = product.description,
             price = product.price,
-            category = product.category
+            category = product.category.title
         ), reply_markup=admin_menu)
     else:
         await message.answer(product_text.
@@ -146,5 +146,5 @@ async def create_product_photos(
             name=product.title,
             description=product.description,
             price=product.price,
-            category=product.category
+            category=product.category.title
         ), reply_markup=admin_menu)

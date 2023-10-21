@@ -8,14 +8,14 @@ from aiogram import Bot
 
 
 async def add_product(message_type: str, title: str, description: str, price: int, category_title: str,
-                      session: AsyncSession, bot: Bot, photo: PhotoSize = None):
+                      session: AsyncSession, bot: Bot, photo: str = None):
     category = await get_category_by_title(category_title, session)
     if category:
-        uploaded_photo = None
-        if photo:
-            uploaded_photo = await upload_photo(photo, bot)
+        # uploaded_photo = None
+        # if photo:
+        #     uploaded_photo = await upload_photo(photo, bot)
         new_product = Product(message_type=message_type, title=title, description=description, price=price,
-                              photo=uploaded_photo, category=category)
+                              photo=photo, category=category)
         session.add(new_product)
         await session.commit()
         return new_product
