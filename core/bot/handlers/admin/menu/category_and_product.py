@@ -7,7 +7,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from core.config import get_config
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-from core.backend.utils.photo import upload_photos
+from core.backend.utils.photo import upload_photo
+from aiogram.types import InputFile
+from core.text import product_text
+from core.bot.keyboards.reply import admin_menu
 
 
 async def create_category(
@@ -98,17 +101,33 @@ async def create_product_photos(
         session: AsyncSession
 ):
     if message.photo:
-        urls = await upload_photos([message.photo])
+        urls = await upload_photo(message)
         await state.update_data(photos=urls)
     elif message.text == "Нет":
         await state.update_data(photos=None)
 
     data = await state.get_data()
     await state.clear()
-    product = add_product(
+    product = await add_product(
         message_type="text" if data["photos"] == None else "photo",
         title=data["title"],
         description=data["description"],
         category_title=data["category"],
-        photos=data["photos"]
+        photo=data["photos"] if data["photos"] != None else None
     )
+    if product.photo != None:
+        await message.answer_photo(photo=InputFile(product.photo), caption=product_text.
+                                   format(
+            name = product.title,
+            description = product.description,
+            price = product.price,
+            category = product.category
+        ), reply_markup=admin_menu)
+    else:
+        await message.answer(product_text.
+                           format(
+            name=product.title,
+            description=product.description,
+            price=product.price,
+            category=product.category
+        ), reply_markup=admin_menu)

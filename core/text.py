@@ -77,3 +77,10 @@ ID: <code>{id}</code>
 Баланс: <i>{balance}</i>
 Должность: <b>{position}</b>
 """
+
+product_text = """
+Название: <code>{name}</code>
+Описание: <b>{description}</b>
+Цена: <b>{price} TC</b>
+Категория <b>{category}</b>
+"""

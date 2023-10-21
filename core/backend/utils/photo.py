@@ -11,7 +11,8 @@ from core.config import get_config
 #     return photo[-1].file
 
 
-async def upload_photo(photo: Message.photo):
+async def upload_photo(photo: Message):
+    photo = photo.photo
     path = BytesIO()
     await photo[-1].download(destination_file=path)
     async with aiohttp.ClientSession() as session:
