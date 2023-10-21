@@ -19,3 +19,9 @@ async def edit_status(tg_id: int, status: bool, session: AsyncSession):
     user = await get_user(tg_id, session)
     user.is_worker = status
     await session.commit()
+
+
+async def add_money(tg_id: int, money: int, session: AsyncSession):
+    user = await get_user(tg_id, session)
+    user.balance += money
+    await session.commit()
