@@ -14,6 +14,8 @@ from core.bot.states.admin.money import MoneyAdd
 from core.bot.handlers.admin.menu import add_user_money, set_money, get_money_count, get_all_users_handler
 from core.bot.handlers.user.money_send import create_money_token, create_money_token_final
 from core.bot.states.user.money_send import SendMoney
+from core.bot.handlers.admin.menu.category_and_product import create_category, get_name_category
+from core.bot.states.admin.category import CreateCategory
 
 import logging
 
@@ -44,6 +46,8 @@ async def start():
     dp.message.register(get_money_count, MoneyAdd.id)
     dp.message.register(set_money, MoneyAdd.money)
     dp.message.register(get_all_users_handler, F.text == "Список юзеров бота")
+    dp.message.register(create_category, F.text == "Создать категорию")
+    dp.message.register(get_name_category, CreateCategory.name)
 
     try:
         await dp.start_polling(bot)

@@ -20,5 +20,9 @@ admin_menu = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton(text="Список юзеров бота"),
         KeyboardButton(text="Начислить баланс")
+    ],
+    [
+        KeyboardButton(text="Создать категорию"),
+        KeyboardButton(text="Создать товар")
     ]
 ])
