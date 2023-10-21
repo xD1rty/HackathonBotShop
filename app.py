@@ -18,7 +18,7 @@ from core.bot.states.user.money_send import SendMoney
 import logging
 
 async def start():
-    logging.basicConfig(level=logging.INFO,
+    logging.basicConfig(level=logging.DEBUG,
                         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     bot = Bot(token=get_config(".env").BOT_TOKEN, parse_mode=ParseMode.HTML)
     dp = Dispatcher()
