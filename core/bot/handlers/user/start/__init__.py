@@ -17,7 +17,7 @@ async def start_handler(
         if message.from_user.id == get_config(".env").ADMIN_ID:
             await message.answer(start_admin.format(name=message.from_user.first_name))
         else:
-            user = get_user(message.from_user.id, session)
+            user = await get_user(message.from_user.id, session)
             if user == None:
                 await message.answer(start_non_user, reply_markup=reg_button)
             else:

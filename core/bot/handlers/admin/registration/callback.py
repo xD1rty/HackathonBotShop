@@ -10,7 +10,7 @@ async def ban_or_accept_user(call: CallbackQuery, bot: Bot, session: AsyncSessio
         telegram_user_id = int(call.data.replace("ban_", "").strip())
         await bot.send_message(telegram_user_id, reg_ban)
         await call.message.answer(admin_user_request_ban.format(id=telegram_user_id))
-        await edit_status(telegram_user_id, False)
+        await edit_status(telegram_user_id, False, session)
         await call.answer()
     if "accept_" in call.data:
         telegram_user_id = int(call.data.replace("accept_", "").strip())
@@ -20,6 +20,6 @@ async def ban_or_accept_user(call: CallbackQuery, bot: Bot, session: AsyncSessio
             balance = user.balance,
             id = telegram_user_id
         ), reply_markup=user_menu)
-        await edit_status(telegram_user_id, True)
+        await edit_status(telegram_user_id, True, session)
         await call.message.answer(admin_user_request_accept.format(name=user.name, position=user.position, id=telegram_user_id, telegram_tag=user.telegram_tag))
         await call.answer()
