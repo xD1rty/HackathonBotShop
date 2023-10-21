@@ -8,7 +8,7 @@ from secrets import token_urlsafe
 
 async def create_token(tg_id: int, money: int, session: AsyncSession):
     user = await get_user(tg_id, session)
-    token = token_urlsafe(16)
+    token = token_urlsafe()
     token_db = Token(token=token, money=money, user=user)
     session.add(token_db)
     await session.commit()
