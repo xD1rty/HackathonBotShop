@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship
 class Token(Base):
     __tablename__ = 'tokens'
     id = Column(Integer, primary_key=True)
-    token = Column(String(16))
+    token = Column(String)
     money = Column(Integer)
     is_close = Column(Boolean, default=False)
     user_id = Column(Integer, ForeignKey('users.id'))
