@@ -25,4 +25,4 @@ async def get_category_by_title_with_products(title: str, session: AsyncSession)
 
 
 async def get_all_category(session: AsyncSession):
-    return (await session.execute(select(Category))).all()
+    return (await session.execute(select(Category))).scalars().all()
