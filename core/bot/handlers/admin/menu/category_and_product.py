@@ -80,7 +80,7 @@ async def create_product_price(
         await state.set_state(CreateProduct.category)
 
     except :
-        ...
+        await message.answer("Введите валидное значение")
 
 async def create_product_category(
         message: Message,
