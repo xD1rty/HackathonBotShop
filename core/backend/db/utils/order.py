@@ -11,13 +11,22 @@ async def add_order(tg_id: int, product_id: int, session: AsyncSession):
     order = Order(user=user, product=product)
     session.add(order)
     await session.commit()
+    return True
+
+
+# async def add_order_no_commit(tg_id: int, product_id: int, session: AsyncSession):
+#     user = await get_user_by_id(tg_id, session)
+#     product = await get_product_by_id(product_id, session)
+#     order = Order(user=user, product=product)
+#     session.add(order)
+#     return True
 
 
 async def get_order_by_id(order_id: int, session: AsyncSession):
     return (await session.execute(select(Order).filter(Order.id == order_id))).scalar_one_or_none()
 
 
-async def change_status_by_id(order_id: int, status: bool, session: AsyncSession):
+async def change_order_status_by_id(order_id: int, status: bool, session: AsyncSession):
     order = await get_order_by_id(order_id, session)
     order.status = status
     await session.commit()
