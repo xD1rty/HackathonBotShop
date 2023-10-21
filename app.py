@@ -6,7 +6,7 @@ from core.config import get_config
 from core.bot.handlers.user.start import start_handler
 from core.bot.handlers.user.registration import start_registration, get_name, get_position
 from core.bot.states.user.registration import Registration
-from core.bot.handlers.admin.registration.callback import ban_or_accept_user
+from core.bot.handlers.admin.registration.callback import ban_user, accept_user
 from core.bot.middlewares.db import DbSessionMiddleware
 from core.backend.db.db_setup import init_db, session
 from core.bot.handlers.user.profile import get_profile
@@ -19,7 +19,7 @@ from core.bot.states.admin.category import CreateCategory
 from core.bot.states.admin.product import CreateProduct
 from core.bot.states.user.shopping import GetProductsByCategory
 from core.bot.handlers.user.shopping import get_product_by_category_start, get_all_products_by_category
-from core.bot.handlers.user.shopping.callback import create_order_request
+from core.bot.handlers.user.shopping.callback import create_order_request, verify_order_request
 from datetime import date
 
 import logging
@@ -47,7 +47,9 @@ async def start():
     dp.message.register(get_product_by_category_start, F.text == "Магазин")
     dp.message.register(get_all_products_by_category, GetProductsByCategory.category)
     dp.callback_query.register(create_order_request, F.data.startswith("buy_"))
-    dp.callback_query.register(ban_or_accept_user, F.data.startswith("ban_") or F.data.startswith("accept_"))
+    dp.callback_query.register(ban_user, F.data.startswith("ban_"))
+    dp.callback_query.register(accept_user, F.data.startswith("accept_"))
+    dp.callback_query.register(verify_order_request, F.data.startswith("done_"))
 
     # Admin
 

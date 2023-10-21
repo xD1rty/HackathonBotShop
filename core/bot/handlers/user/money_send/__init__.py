@@ -27,3 +27,6 @@ async def create_money_token_final(
         await state.clear()
     except TypeError:
         await message.answer("Попробуй снова, тут ошибка")
+    except Exception:
+        await message.answer("Недостаточно средств! Нажмите /start")
+        await state.clear()
