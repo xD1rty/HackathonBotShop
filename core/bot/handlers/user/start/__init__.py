@@ -1,8 +1,8 @@
 from aiogram import Bot, types, filters
-from core.text import start_non_user, start_admin, admin_user_request, reg_finish, reg_ban, start_user
+from core.text import start_non_user, start_admin, admin_user_request, reg_ban, reg_finish, start_user
 from core.bot.keyboards.reply import reg_button
-from core.config import get_config
 from sqlalchemy.ext.asyncio import AsyncSession
+from core.config import get_config
 from core.backend.db.utils.user import get_user
 
 async def start_handler(
@@ -26,4 +26,4 @@ async def start_handler(
                 elif user.is_worker == False:
                     await message.answer(reg_ban)
                 else:
-                    await message.answer(start_user)
+                    await message.answer(start_user.format(name=user.name, id=user.id, balance=user.balance))
