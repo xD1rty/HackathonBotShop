@@ -17,6 +17,8 @@ from core.bot.states.user.money_send import SendMoney
 from core.bot.handlers.admin.menu.category_and_product import create_category, get_name_category, create_product, create_product_photos, create_product_category, create_product_name, create_product_desc, create_product_price
 from core.bot.states.admin.category import CreateCategory
 from core.bot.states.admin.product import CreateProduct
+from core.bot.states.user.shopping import GetProductsByCategory
+from core.bot.handlers.user.shopping import get_product_by_category_start, get_all_products_by_category
 
 import logging
 
@@ -39,6 +41,8 @@ async def start():
     dp.message.register(get_profile, F.text == "Профиль")
     dp.message.register(create_money_token, F.text == "Создать чек")
     dp.message.register(create_money_token_final, SendMoney.money)
+    dp.message.register(get_product_by_category_start, F.text == "Магазин")
+    dp.message.register(get_all_products_by_category, GetProductsByCategory.category)
     dp.callback_query.register(ban_or_accept_user)
 
     # Admin

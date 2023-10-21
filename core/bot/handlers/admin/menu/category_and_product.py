@@ -73,7 +73,7 @@ async def create_product_price(
     try:
         print(await get_all_category(session))
         k = ReplyKeyboardMarkup(
-           keyboard=[[KeyboardButton(text=i.title) for i in await get_all_category(session)]]
+           keyboard=[[KeyboardButton(text=i.title)] for i in await get_all_category(session)]
         )
         await state.update_data(price=int(message.text))
         await message.answer("Выберите категорию:", reply_markup=k)
