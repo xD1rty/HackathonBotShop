@@ -30,6 +30,7 @@ async def get_name_category(
 ):
     res = await add_category(message.text, session)
     await message.answer(f"Категория {res.title} добавлена!")
+    await state.clear()
 
 
 async def create_product(
@@ -68,18 +69,16 @@ async def create_product_price(
         session: AsyncSession
 ):
     try:
-        keyboards = [].append([KeyboardButton(text=i.title)] for i in await get_all_category(session))
+        print(await get_all_category(session))
+        k = ReplyKeyboardMarkup(
+           keyboard=[[KeyboardButton(text=i.title) for i in await get_all_category(session)]]
+        )
         await state.update_data(price=int(message.text))
-        await message.answer("Выберите категорию:", reply_markup=ReplyKeyboardMarkup(
-            keyboard=[
-                keyboards
-            ]
-        ))
+        await message.answer("Выберите категорию:", reply_markup=k)
         await state.set_state(CreateProduct.category)
 
-    except:
-        await message.answer("Введите валидное значение!!!")
-
+    except :
+        ...
 
 async def create_product_category(
         message: Message,
