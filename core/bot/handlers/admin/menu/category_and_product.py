@@ -1,4 +1,5 @@
 from aiogram.types import Message
+from aiogram import Bot
 from core.bot.states.admin.category import CreateCategory
 from core.bot.states.admin.product import CreateProduct
 from core.backend.db.utils.category import add_category, get_all_category, get_category_by_title
@@ -97,7 +98,8 @@ async def create_product_category(
 async def create_product_photos(
         message: Message,
         state: FSMContext,
-        session: AsyncSession
+        session: AsyncSession,
+        bot: Bot
 ):
     if message.photo:
         urls = await upload_photo(message)
@@ -112,7 +114,8 @@ async def create_product_photos(
         title=data["title"],
         description=data["description"],
         category_title=data["category"],
-        photo=data["photos"] if data["photos"] != None else None
+        photo=data["photos"] if data["photos"] != None else None,
+        bot=bot
     )
     if product.photo != None:
         await message.answer_photo(photo=InputFile(product.photo), caption=product_text.

@@ -3,15 +3,17 @@ from core.backend.db.utils.category import get_category_by_title, get_category_b
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from core.backend.utils.photo import upload_photo
+from aiogram.types import PhotoSize
+from aiogram import Bot
 
 
 async def add_product(message_type: str, title: str, description: str, price: int, category_title: str,
-                      session: AsyncSession, photo: str):
+                      session: AsyncSession, photo: PhotoSize, bot: Bot):
     category = await get_category_by_title(category_title, session)
     if category:
         uploaded_photo = None
         if photo:
-            uploaded_photo = await upload_photo(photo)
+            uploaded_photo = await upload_photo(photo, bot)
         new_product = Product(message_type=message_type, title=title, description=description, price=price,
                               photo=uploaded_photo, category=category)
         session.add(new_product)
