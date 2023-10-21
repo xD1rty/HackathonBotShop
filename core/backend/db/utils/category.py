@@ -15,3 +15,7 @@ async def add_category(title: str, session: AsyncSession):
 
 async def get_category_by_title(title: str, session: AsyncSession):
     return (await session.execute(select(Category).filter(Category.title == title))).scalar_one_or_none()
+
+
+async def get_all_category(session: AsyncSession):
+    return (await session.execute(select(Category))).all()
