@@ -11,6 +11,6 @@ class Product(Base):
     title = Column(String)
     description = Column(String)
     price = Column(Integer)
-    photos = Column(String, default=None)
+    photo = Column(String, default=None)
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship('Category', back_populates='products')
