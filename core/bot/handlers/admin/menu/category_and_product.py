@@ -110,16 +110,28 @@ async def create_product_photos(
 
     data = await state.get_data()
     await state.clear()
-    product = await add_product(
-        message_type="text" if data["photos"] == None else "photo",
+    if data["photos"] == None:
+        product = await add_product(
+        message_type="text" ,
         title=data["title"],
         description=data["description"],
         category_title=data["category"],
-        photo=data["photos"] if data["photos"] != None else ...,
         price=data["price"],
         session=session,
         bot=bot
-    )
+        )
+
+    if data["photos"] != None:
+        product = await add_product(
+            message_type="photo",
+            title=data["title"],
+            description=data["description"],
+            category_title=data["category"],
+            price=data["price"],
+            photo=data["photos"],
+            session=session,
+            bot=bot
+        )
     if product.photo != None:
         await message.answer_photo(photo=InputFile(product.photo), caption=product_text.
                                    format(
