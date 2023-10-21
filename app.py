@@ -19,12 +19,15 @@ from core.bot.states.admin.category import CreateCategory
 from core.bot.states.admin.product import CreateProduct
 from core.bot.states.user.shopping import GetProductsByCategory
 from core.bot.handlers.user.shopping import get_product_by_category_start, get_all_products_by_category
+from core.bot.handlers.user.shopping.callback import create_order_request
+from datetime import datetime
 
 import logging
 
 async def start():
     logging.basicConfig(level=logging.DEBUG,
-                        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+                        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+                        filename=f"logs-{datetime.now()}.log", encoding="utf-8")
     bot = Bot(token=get_config(".env").BOT_TOKEN, parse_mode=ParseMode.HTML)
     dp = Dispatcher()
 
@@ -43,7 +46,8 @@ async def start():
     dp.message.register(create_money_token_final, SendMoney.money)
     dp.message.register(get_product_by_category_start, F.text == "Магазин")
     dp.message.register(get_all_products_by_category, GetProductsByCategory.category)
-    dp.callback_query.register(ban_or_accept_user)
+    dp.callback_query.register(create_order_request, F.data.startswith("buy_"))
+    dp.callback_query.register(ban_or_accept_user, F.data.startswith("ban_") or F.data.startswith("accept_"))
 
     # Admin
 

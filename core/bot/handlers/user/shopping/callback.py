@@ -12,7 +12,6 @@ async def create_order_request(
         bot: Bot,
         session: AsyncSession
 ):
-    if "buy_" in call.data:
         order = await add_order(call.from_user.id, int(call.data.replace("buy_", "").strip()))
         user = await get_user_by_id(order.user_id, session)
         await bot.send_message(get_config(".env").ADMIN_ID, admin_order_request.format(

@@ -43,7 +43,7 @@ async def get_all_products_by_category(
                     name=product.title,
                     description=product.description,
                     price=product.price,
-                    category=product.category.title
+                    category=message.text
                 ), reply_markup=keyboard_inline)
             else:
                 await message.answer(product_text.
@@ -51,7 +51,7 @@ async def get_all_products_by_category(
                     name=product.title,
                     description=product.description,
                     price=product.price,
-                    category=product.category.title
+                    category=message.text
                 ), reply_markup=keyboard_inline)
     else:
         await message.answer("Введите корректное значение")
