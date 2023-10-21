@@ -13,3 +13,9 @@ async def register(tg_id: int, telegram_tag: str, name: str, position: str, sess
 
 async def get_user(tg_id: int, session: AsyncSession):
     return (await session.execute(select(User).filter(User.id == tg_id))).scalar_one_or_none()
+
+
+async def edit_status(tg_id: int, status: bool, session: AsyncSession):
+    user = await get_user(tg_id, session)
+    user.is_worker = status
+    await session.commit()
