@@ -17,7 +17,7 @@ async def get_order_by_id(order_id: int, session: AsyncSession):
     return (await session.execute(select(Order).filter(Order.id == order_id))).scalar_one_or_none()
 
 
-async def change_status_by_id(order_id: int, status: str, session: AsyncSession):
+async def change_status_by_id(order_id: int, status: bool, session: AsyncSession):
     order = await get_order_by_id(order_id, session)
     order.status = status
     await session.commit()

@@ -15,9 +15,17 @@ from aiogram.types import PhotoSize
 
 async def upload_photo(photo: PhotoSize, bot: Bot):
     photo_path = (await bot.get_file(photo.file_id)).file_path
+    print(photo_path)
     destination = BytesIO()
     async with aiohttp.ClientSession() as session:
+        data = aiohttp.FormData()
+        data.add_field('file',
+                       open('Front.jpg', 'rb'),
+                       filename='Front.jpg',
+                       content_type='multipart/form-data')
         async with session.post(
-                f'http://freeimage.host/api/1/upload/?key={get_config(".env").API_KEY}&source={await bot.download_file(photo_path, destination=destination)}&format=json'
+                f'http://freeimage.host/api/1/upload/?key={get_config(".env").API_KEY}&format=json',
+                data=data
         ) as response:
+            print(await response.json(), response)
             return (await response.json())['image']['url']
