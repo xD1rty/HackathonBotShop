@@ -11,7 +11,7 @@ async def add_order(tg_id: int, product_id: int, session: AsyncSession):
     order = Order(user=user, product=product)
     session.add(order)
     await session.commit()
-    return True
+    return order
 
 
 # async def add_order_no_commit(tg_id: int, product_id: int, session: AsyncSession):
