@@ -15,3 +15,10 @@ user_menu = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton(text="Создать чек")
     ]
 ])
+
+admin_menu = ReplyKeyboardMarkup(keyboard=[
+    [
+        KeyboardButton(text="Список юзеров бота"),
+        KeyboardButton(text="Начислить баланс")
+    ]
+])

@@ -4,6 +4,7 @@ from core.bot.keyboards.reply import reg_button
 from sqlalchemy.ext.asyncio import AsyncSession
 from core.config import get_config
 from core.backend.db.utils.user import get_user
+from core.bot.keyboards.reply import admin_menu
 
 async def start_handler(
         message: types.Message,
@@ -15,7 +16,7 @@ async def start_handler(
         pass
     else:
         if message.from_user.id == get_config(".env").ADMIN_ID:
-            await message.answer(start_admin.format(name=message.from_user.first_name))
+            await message.answer(start_admin.format(name=message.from_user.first_name), reply_markup=admin_menu)
         else:
             user = await get_user(message.from_user.id, session)
             if user == None:

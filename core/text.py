@@ -70,3 +70,10 @@ admin_user_request_ban = """
 Привет, <b>админ</b>!
 Пользователь с ID <code>{id}</code> забанен в системе
 """
+
+user_profile = """
+Имя: <b>{name}</b>
+ID: <code>{id}</code>
+Баланс: <i>{balance}</i>
+Должность: <b>{position}</b>
+"""
