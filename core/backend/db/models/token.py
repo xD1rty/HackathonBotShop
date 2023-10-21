@@ -1,5 +1,5 @@
 from core.backend.db.db_setup import Base
-from sqlalchemy import Column, String, Integer, ForeignKey, Boolean
+from sqlalchemy import Column, String, Integer, ForeignKey, Boolean, BigInteger
 from sqlalchemy.orm import relationship
 
 
@@ -9,5 +9,5 @@ class Token(Base):
     token = Column(String)
     money = Column(Integer)
     is_open = Column(Boolean, default=True)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(BigInteger, ForeignKey('users.id'))
     user = relationship('User', back_populates='tokens')

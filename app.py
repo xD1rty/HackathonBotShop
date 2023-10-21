@@ -18,7 +18,7 @@ from core.bot.states.user.money_send import SendMoney
 import logging
 
 async def start():
-    logging.basicConfig(level=logging.INFO,
+    logging.basicConfig(level=logging.DEBUG,
                         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     bot = Bot(token=get_config(".env").BOT_TOKEN, parse_mode=ParseMode.HTML)
     dp = Dispatcher()
@@ -47,6 +47,8 @@ async def start():
 
     try:
         await dp.start_polling(bot)
+    except Exception as exc:
+        logging.error(type(exc), exc, exc.__traceback__)
     finally:
         await bot.session.close()
 
