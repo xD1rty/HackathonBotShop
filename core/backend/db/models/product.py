@@ -7,6 +7,7 @@ from sqlalchemy.orm import relationship
 class Product(Base):
     __tablename__ = 'products'
     id = Column(Integer, primary_key=True)
+    message_type = Column(String)
     title = Column(String)
     description = Column(String)
     price = Column(Integer)
