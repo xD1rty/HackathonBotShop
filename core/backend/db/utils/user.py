@@ -32,3 +32,10 @@ async def add_money(tg_id: int, money: int, session: AsyncSession):
     user.balance += money
     await session.commit()
     return True
+
+
+async def remove_money(tg_id: int, money: int, session: AsyncSession):
+    user = await get_user(tg_id, session)
+    user.balance -= money
+    await session.commit()
+    return True
