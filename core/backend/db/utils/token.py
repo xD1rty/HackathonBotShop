@@ -8,11 +8,14 @@ from secrets import token_urlsafe
 
 async def create_token(tg_id: int, money: int, session: AsyncSession):
     user = await get_user_by_id(tg_id, session)
-    token = token_urlsafe()
-    token_db = Token(token=token, money=money, user=user)
-    session.add(token_db)
-    await session.commit()
-    return token_db
+    if user.balance >= money:
+        user.balance -= money
+        token = token_urlsafe()
+        token_db = Token(token=token, money=money, user=user)
+        session.add(token_db)
+        await session.commit()
+        return token_db
+    raise Exception('недостаточно коинов')
 
 
 async def get_token(token: str, session: AsyncSession):
@@ -29,8 +32,7 @@ async def use_token(tg_id: int, token: str, session: AsyncSession):
         user = await get_user_by_id(tg_id, session)
         money = token_db.money
         token_db.is_open = False
-        token_db.user.balance -= money
         user.balance += money
         await session.commit()
         return True
-    raise Exception('рефералка уже использована')
+    raise Exception('чек уже использован')
