@@ -28,7 +28,8 @@ async def get_name(
 async def get_position(
         message: types.Message,
         bot: Bot,
-        state: FSMContext
+        state: FSMContext,
+        session: AsyncSession
 ):
     await message.answer(reg_finish)
     await state.update_data(position=message.text)
@@ -38,7 +39,7 @@ async def get_position(
         telegram_tag=message.from_user.username,
         name=data["name"],
         position=data["position"],
-        session=AsyncSession()
+        session=session
     )
     await bot.send_message(get_config(".env").ADMIN_ID,
                            admin_user_request.format(
