@@ -5,6 +5,7 @@ from core.backend.db.utils.user import add_money
 from core.config import get_config
 from core.bot.states.admin.money import MoneyAdd
 from aiogram.fsm.context import FSMContext
+from core.backend.db.utils.user import get_all_users
 
 
 async def add_user_money(
@@ -47,5 +48,17 @@ async def set_money(
         await state.clear()
         await add_money(data["id"], data["count"], session)
         await bot.send_message(data["id"], f"Администратор вам зачислил {data['count']} ТС!\nВводи /start")
+        await message.answer(f"Вы начислили {data['count']} TC на счет {data['id']}")
     except:
         await message.answer("Пробуй снова! Произошла ошибка")
+
+
+async def get_all_users_handler(
+        message: Message,
+        session: AsyncSession
+):
+    text = """
+Список всех юзеров бота\n\nИмя / ID / Баланс \n"""
+    for i in await get_all_users(session):
+        text+=f"{i.name} / <code>{i.id}</code> / <b>{i.balance} TC</b>\n"
+    await message.answer(text)

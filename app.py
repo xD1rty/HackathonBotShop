@@ -11,7 +11,7 @@ from core.bot.middlewares.db import DbSessionMiddleware
 from core.backend.db.db_setup import init_db, session
 from core.bot.handlers.user.profile import get_profile
 from core.bot.states.admin.money import MoneyAdd
-from core.bot.handlers.admin.menu import add_user_money, set_money, get_money_count
+from core.bot.handlers.admin.menu import add_user_money, set_money, get_money_count, get_all_users_handler
 
 import logging
 
@@ -39,6 +39,7 @@ async def start():
     dp.message.register(add_user_money, F.text == "Начислить баланс")
     dp.message.register(get_money_count, MoneyAdd.id)
     dp.message.register(set_money, MoneyAdd.money)
+    dp.message.register(get_all_users_handler, F.text == "Список юзеров бота")
 
     try:
         await dp.start_polling(bot)
