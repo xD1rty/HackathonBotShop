@@ -35,6 +35,7 @@ async def create_order_request(
         product_name = product.title,
         price = product.price
     ))
+    await call.answer()
 
 
 async def verify_order_request(
@@ -50,7 +51,7 @@ async def verify_order_request(
         product_name=product.title
     ))
     await call.message.answer(f"Пользователь <code>{order.user_id}</code> должен к вам обратиться по поводу <b>{product.title}</b>")
-
+    await call.answer()
 
 
 
