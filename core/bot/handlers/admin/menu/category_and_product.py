@@ -117,8 +117,7 @@ async def create_product_photos(
         description=data["description"],
         category_title=data["category"],
         price=data["price"],
-        session=session,
-        bot=bot
+        session=session
         )
 
     if data["photos"] != None:
@@ -129,8 +128,7 @@ async def create_product_photos(
             category_title=data["category"],
             price=data["price"],
             photo=data["photos"],
-            session=session,
-            bot=bot
+            session=session
         )
     if product.photo != None:
         await message.answer_photo(photo=product.photo, caption=product_text.

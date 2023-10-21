@@ -31,6 +31,8 @@ async def get_users_of_money_lottery_by_id(lottery_id: int, session: AsyncSessio
 async def add_user_to_money_lottery(tg_id: int, lottery_id: int, session: AsyncSession):
     user = await get_user_by_id(tg_id, session)
     money_lottery = await get_money_lottery_by_id(lottery_id, session)
+    if user in money_lottery.users:
+        raise Exception('вы уже учавствуете в лотерее')
     if user.balance >= money_lottery.price:
         user.balance -= money_lottery.price
         money_lottery.balance += money_lottery.price
