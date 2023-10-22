@@ -44,6 +44,7 @@ async def add_user_to_money_lottery(tg_id: int, lottery_id: int, session: AsyncS
         money_lottery.users.append(user)
         await session.commit()
         if money_lottery.balance >= money_lottery.money_prize:
+            await delete_money_lottery(lottery_id, session)
             winner = choice(money_lottery.users)
             return winner.id
         return True
