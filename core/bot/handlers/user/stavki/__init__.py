@@ -32,17 +32,17 @@ async def stavki_value(
         state: FSMContext,
         session: AsyncSession
 ):
-    #try:
+    try:
         data = await state.get_data()
         value = int(message.text)
         await remove_money(message.from_user.id, data["money"], session)
         result = await bot.send_dice(message.from_user.id, emoji=DiceEmoji.DICE)
         print(result)
         if result.dice.value == value:
-            await add_money(message.from_user,id, data["money"]*2, session)
+            await add_money(message.from_user.id, data["money"]*2, session)
             await message.answer("Вы выиграли!!!")
         else:
             await message.answer("Вы проиграли")
 
-    #except TypeError:
-    #    await message.answer("Введите корректное значение!!!")
+    except TypeError:
+        await message.answer("Введите корректное значение!!!")
