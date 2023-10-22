@@ -21,6 +21,8 @@ from core.bot.states.user.shopping import GetProductsByCategory
 from core.bot.handlers.user.shopping import get_product_by_category_start, get_all_products_by_category
 from core.bot.handlers.user.shopping.callback import create_order_request, verify_order_request
 from datetime import date
+from core.bot.handlers.admin.lottery import create_lottery_start, create_lottery_price, create_lottery_win
+from core.bot.states.admin.lottery import CreateLottery
 
 import logging
 
@@ -38,13 +40,13 @@ async def start():
     dp.message.register(start_handler, Command("start"))
 
     # User
-    dp.message.register(start_registration, F.text == "Зарегистрироваться📝")
+    dp.message.register(start_registration, F.text == "Зарегистрироваться 📝")
     dp.message.register(get_name, Registration.name)
     dp.message.register(get_position, Registration.position)
-    dp.message.register(get_profile, F.text == "Профиль👤")
-    dp.message.register(create_money_token, F.text == "Создать чек📃")
+    dp.message.register(get_profile, F.text == "Профиль 👤")
+    dp.message.register(create_money_token, F.text == "Создать чек 📃")
     dp.message.register(create_money_token_final, SendMoney.money)
-    dp.message.register(get_product_by_category_start, F.text == "Магазин🛒")
+    dp.message.register(get_product_by_category_start, F.text == "Магазин 🛒")
     dp.message.register(get_all_products_by_category, GetProductsByCategory.category)
     dp.callback_query.register(create_order_request, F.data.startswith("buy_"))
     dp.callback_query.register(ban_user, F.data.startswith("ban_"))
@@ -53,18 +55,21 @@ async def start():
 
     # Admin
 
-    dp.message.register(add_user_money, F.text == "Начислить баланс💵")
+    dp.message.register(add_user_money, F.text == "Начислить баланс 💵")
     dp.message.register(get_money_count, MoneyAdd.id)
     dp.message.register(set_money, MoneyAdd.money)
-    dp.message.register(get_all_users_handler, F.text == "Список юзеров бота📋")
-    dp.message.register(create_category, F.text == "Создать категорию🏷")
+    dp.message.register(get_all_users_handler, F.text == "Список юзеров бота 📋")
+    dp.message.register(create_category, F.text == "Создать категорию 🏷")
     dp.message.register(get_name_category, CreateCategory.name)
-    dp.message.register(create_product, F.text == "Создать товар📦")
+    dp.message.register(create_product, F.text == "Создать товар 📦")
     dp.message.register(create_product_name, CreateProduct.title)
     dp.message.register(create_product_desc, CreateProduct.description)
     dp.message.register(create_product_price, CreateProduct.price)
     dp.message.register(create_product_category, CreateProduct.category)
     dp.message.register(create_product_photos, CreateProduct.photos)
+    dp.message.register(create_lottery_start, F.text == "Создать розыгрыш денег")
+    dp.message.register(create_lottery_price, CreateLottery.price)
+    dp.message.register(create_lottery_win, CreateLottery.win)
 
     try:
         await dp.start_polling(bot)
