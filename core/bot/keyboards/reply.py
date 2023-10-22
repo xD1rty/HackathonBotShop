@@ -8,7 +8,7 @@ reg_button = ReplyKeyboardMarkup(keyboard=[
 
 user_menu = ReplyKeyboardMarkup(keyboard=[
     [
-        KeyboardButton(text="Магазин💵"),
+        KeyboardButton(text="Магазин🛒"),
         KeyboardButton(text="Профиль👤")
     ],
     [
