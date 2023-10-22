@@ -18,10 +18,10 @@ async def start_handler(
         token = await get_token(command.args, session)
         if token != None and token.is_open == True:
             await use_token(message.from_user.id, command.args, session)
-            await bot.send_message(token.user_id, f"Пользователь @{message.from_user.username} активировал ваш чек на {token.money} TC",)
-            await message.answer(f"Вы активировали чек на {token.money} TC", reply_markup=user_menu)
+            await bot.send_message(token.user_id, f"Пользователь @{message.from_user.username} активировал ваш чек на {token.money} TC💵",)
+            await message.answer(f"Вы активировали чек на {token.money} TC💵", reply_markup=user_menu)
         else:
-            await message.answer("Напишите еще раз старт /start", reply_markup=user_menu)
+            await message.answer("Напишите еще раз старт /start🔧", reply_markup=user_menu)
     else:
         if message.from_user.id == get_config(".env").ADMIN_ID:
             await message.answer(start_admin.format(name=message.from_user.first_name), reply_markup=admin_menu)

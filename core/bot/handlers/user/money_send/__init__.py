@@ -12,7 +12,7 @@ async def create_money_token(
         state: FSMContext,
         session: AsyncSession
 ):
-    await message.answer("Введите кол-во монет, которое вы хотите отправить:")
+    await message.answer("Введите кол-во монет, которое вы хотите отправить💵:")
     await state.set_state(SendMoney.money)
 
 async def create_money_token_final(
@@ -23,10 +23,10 @@ async def create_money_token_final(
 ):
     try:
         token = await create_token(message.from_user.id, int(message.text), session)
-        await message.answer(f"Ваша ссылка на получение монет: \n\nt.me/intensa_shop_bot?start={token.token}")
+        await message.answer(f"Ваша ссылка на получение монет🤑: \n\nt.me/intensa_shop_bot?start={token.token}")
         await state.clear()
     except TypeError:
-        await message.answer("Попробуй снова, тут ошибка")
+        await message.answer("Попробуй снова, тут ошибка😓")
     except Exception:
-        await message.answer("Недостаточно средств! Нажмите /start")
+        await message.answer("Недостаточно средств!💸❌ Нажмите /start")
         await state.clear()

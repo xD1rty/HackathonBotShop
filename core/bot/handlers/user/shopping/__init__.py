@@ -19,7 +19,7 @@ async def get_product_by_category_start(
     keyboard = ReplyKeyboardMarkup(keyboard=[
         [KeyboardButton(text=i.title)] for i in await get_all_category(session)
     ])
-    await message.answer("Выберите нужную вам категорию:", reply_markup=keyboard)
+    await message.answer("Выберите нужную вам категорию🏷:", reply_markup=keyboard)
     await state.set_state(GetProductsByCategory.category)
 
 async def get_all_products_by_category(
@@ -34,7 +34,7 @@ async def get_all_products_by_category(
         for product in products:
             keyboard_inline = InlineKeyboardMarkup(inline_keyboard=[
                 [
-                    InlineKeyboardButton(text="Купить", callback_data=f"buy_{product.id}")
+                    InlineKeyboardButton(text="Купить💸", callback_data=f"buy_{product.id}")
                 ]
             ])
             if product.photo is not None:

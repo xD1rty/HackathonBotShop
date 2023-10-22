@@ -17,13 +17,13 @@ async def create_order_request(
     user = await get_user_by_id(call.from_user.id, session)
     product = await get_product_by_id(product_id, session)
     if user.balance < product.price:
-        await call.message.answer("Недостаточно денег!!! Нажмите /start")
+        await call.message.answer("Недостаточно денег!!!💸❌ Нажмите /start")
         return
     else:
         order = await add_order(call.from_user.id, product_id, session)
     keyboard_verity = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(
-            text="Готов", callback_data=f"done_{order.id}"
+            text="Готов✅", callback_data=f"done_{order.id}"
         )]
     ])
     await bot.send_message(get_config(".env").ADMIN_ID, admin_order_request.format(
@@ -50,7 +50,7 @@ async def verify_order_request(
     await bot.send_message(order.user_id, user_order_done.format(
         product_name=product.title
     ))
-    await call.message.answer(f"Пользователь <code>{order.user_id}</code> должен к вам обратиться по поводу <b>{product.title}</b>")
+    await call.message.answer(f"Пользователь <code>{order.user_id}</code> должен к вам обратиться по поводу <b>{product.title}</b>🛒")
     await call.answer()
 
 

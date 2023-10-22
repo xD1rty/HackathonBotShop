@@ -17,4 +17,4 @@ async def get_profile(
             position=user.position
         ))
     else:
-        await message.answer("Доступ запрещен!")
+        await message.answer("Доступ запрещен!🚫")

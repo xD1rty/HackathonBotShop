@@ -20,10 +20,10 @@ async def create_category(
         state: FSMContext,
 ):
     if message.from_user.id == get_config(".env").ADMIN_ID:
-        await message.answer("Введите имя новой категории:")
+        await message.answer("Введите имя новой категории🏷:")
         await state.set_state(CreateCategory.name)
     else:
-        await message.answer("Доступ запрещен")
+        await message.answer("Доступ запрещен🚫")
 
 async def get_name_category(
         message: Message,
@@ -31,7 +31,7 @@ async def get_name_category(
         session: AsyncSession
 ):
     res = await add_category(message.text, session)
-    await message.answer(f"Категория {res.title} добавлена!")
+    await message.answer(f"Категория {res.title} добавлена!🏷✅")
     await state.clear()
 
 
@@ -40,11 +40,11 @@ async def create_product(
         state: FSMContext
 ):
     if message.from_user.id == get_config(".env").ADMIN_ID:
-        await message.answer("Введите название товара:")
+        await message.answer("Введите название товара📦:")
         await state.set_state(CreateProduct.title)
 
     else:
-        await message.answer("Доступ запрещен")
+        await message.answer("Доступ запрещен🚫")
 
 
 async def create_product_name(
@@ -52,7 +52,7 @@ async def create_product_name(
         state: FSMContext
 ):
     await state.update_data(title=message.text)
-    await message.answer("Введите описание товара:")
+    await message.answer("Введите описание товара📝:")
     await state.set_state(CreateProduct.description)
 
 
@@ -61,7 +61,7 @@ async def create_product_desc(
         state: FSMContext
 ):
     await state.update_data(description=message.text)
-    await message.answer("Введите цену:")
+    await message.answer("Введите цену💵:")
     await state.set_state(CreateProduct.price)
 
 
@@ -76,11 +76,11 @@ async def create_product_price(
            keyboard=[[KeyboardButton(text=i.title)] for i in await get_all_category(session)]
         )
         await state.update_data(price=int(message.text))
-        await message.answer("Выберите категорию:", reply_markup=k)
+        await message.answer("Выберите категорию🏷:", reply_markup=k)
         await state.set_state(CreateProduct.category)
 
     except :
-        await message.answer("Введите валидное значение")
+        await message.answer("Введите валидное значение🔧")
 
 async def create_product_category(
         message: Message,
@@ -89,11 +89,11 @@ async def create_product_category(
 ):
     if message.text in [i.title for i in await get_all_category(session)]:
         await state.update_data(category=message.text)
-        await message.answer("Отправьте фотографию (ОДНУ), если не хотите, нажмите нет", reply_markup=ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text="Нет")]]))
+        await message.answer("Отправьте ❗️<b>ОДНУ</b>❗️ фотографию, если не хотите, нажмите нет", reply_markup=ReplyKeyboardMarkup(keyboard=[[KeyboardButton(text="Нет")]]))
         await state.set_state(CreateProduct.photos)
 
     else:
-        await message.answer("Отправьте из списка!!!")
+        await message.answer("Отправьте из списка!!!🔧")
 
 
 async def create_product_photos(
