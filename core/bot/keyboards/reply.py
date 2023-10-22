@@ -12,7 +12,8 @@ user_menu = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton(text="Профиль 👤")
     ],
     [
-        KeyboardButton(text="Создать чек 📃")
+        KeyboardButton(text="Создать чек 📃"),
+        KeyboardButton(text="Ставка")
     ]
 ])
 

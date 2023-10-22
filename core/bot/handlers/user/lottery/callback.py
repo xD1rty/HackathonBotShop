@@ -9,6 +9,7 @@ async def add_user_to_lottery_money(
         session: AsyncSession,
         bot: Bot
 ):
+    try:
         user_id = call.from_user.id
         lottery_id = int(call.data.replace("moneyl_", "").strip())
         lottery = await get_money_lottery_by_id(lottery_id, session)
@@ -16,9 +17,10 @@ async def add_user_to_lottery_money(
         if result == True:
             await call.message.answer("Отлично! Вы учавствуете!")
         else:
-            #for user in lottery.users:
-            #    if user.id != result:
-            #        await bot.send_message(user.id, "Вы не выиграли в розыгрыше(((")
-            #    else:
+            for user in lottery.users:
+                if user.id != result:
+                    await bot.send_message(user.id, "Вы не выиграли в розыгрыше(((")
+                else:
                     await bot.send_message(result, "Ты выиграл в розыгрыше!! Поздравляю")
                     await add_money(result, lottery.money_prize, session)
+    except Exception: await call.message.answer("Либо ты уже участвуешь, либо нет денег, либо розыгрыш удален")

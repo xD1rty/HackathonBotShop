@@ -24,6 +24,8 @@ from datetime import date
 from core.bot.handlers.admin.lottery import create_lottery_start, create_lottery_price, create_lottery_win
 from core.bot.states.admin.lottery import CreateLottery
 from core.bot.handlers.user.lottery.callback import add_user_to_lottery_money
+from core.bot.handlers.user.stavki import start_stavki, stavki_money, stavki_value
+from core.bot.states.user.stavki import Stavki
 
 import logging
 
@@ -49,6 +51,9 @@ async def start():
     dp.message.register(create_money_token_final, SendMoney.money)
     dp.message.register(get_product_by_category_start, F.text == "Магазин 🛒")
     dp.message.register(get_all_products_by_category, GetProductsByCategory.category)
+    dp.message.register(start_stavki, F.text == "Ставка")
+    dp.message.register(stavki_money, Stavki.money)
+    dp.message.register(stavki_value, Stavki.value)
     dp.callback_query.register(create_order_request, F.data.startswith("buy_"))
     dp.callback_query.register(ban_user, F.data.startswith("ban_"))
     dp.callback_query.register(accept_user, F.data.startswith("accept_"))
